@@ -26,12 +26,12 @@ function readItems() {
         //console.log(res);
 
         res.forEach(element => {
-            
+
             //console.log(element);
             console.log(`\n${element.item_id}: ${element.product_name}, $${element.price}.\n`);
 
         });
-        
+
         buyPrompt();
     });
 }
@@ -49,8 +49,6 @@ function buyPrompt() {
             name: "amount"
         }
     ]).then(response => {
-        // console.log(response.ID);
-        // console.log(response.amount);
 
         buy(response.ID, response.amount);
     })
@@ -58,19 +56,47 @@ function buyPrompt() {
 
 function buy(id, amount) {
 
-    connection.query(`SELECT * FROM products WHERE item_id = ${id}`, function (err,res) {
+    connection.query(`SELECT * FROM products WHERE item_id = ${id}`, function (err, res) {
         if (err) throw err;
 
         let amountDB = res[0].stock_quantity;
+        let price = res[0].price;
 
         if (amountDB < amount) {
-            console.log(`not enough stock product available, sorry`);
-        } else {
-            console.log(`ok`);
-        }
-    })
 
-    //console.log(`this the id in the new func: ${id}`);
-    //console.log(`this the amount in the new func: ${amount}`);
+            console.log(`not enough stock product available, sorry`);
+            connection.end();
+
+        } else {
+
+            itemBought(id, amount, amountDB, price);
+            
+        }
+    });
+
+    
+}
+
+function itemBought(id, amount, amountDB, price) {
+    connection.query(`UPDATE products SET stock_quantity = ${amountDB - amount} WHERE item_id = ${id}`, function (err, res) {
+        if (err) throw err;
+
+        display(id);
+
+        console.log(`your purchase cost: ${amount * price}`);
+    });
+
+}
+
+function display(id) {
+
+    connection.query(`SELECT * FROM products where item_id=${id}`, function (err, res) {
+        if (err) throw err;
+
+        //console.log(res);
+        console.log(`\n${res[0].item_id}: ${res[0].product_name}, $${res[0].price}, ${res[0].stock_quantity} remaining.\n`);
+    });
+
     connection.end();
+
 }
