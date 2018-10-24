@@ -83,7 +83,7 @@ function itemBought(id, amount, amountDB, price) {
 
         display(id);
 
-        console.log(`your purchase cost: ${amount * price}`);
+        console.log(`your purchase cost: $${(amount * price).toFixed(2)}`);
     });
 
 }
