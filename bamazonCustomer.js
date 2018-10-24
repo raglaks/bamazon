@@ -23,13 +23,30 @@ function readItems() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
 
-        // console.log(res);
-
         res.forEach(element => {
 
-            console.log(`\n${element.item_id}: ${element.product_name}, ${element.price}.\n`);
+            console.log(`\n${element.item_id}: ${element.product_name}, $${element.price}.\n`);
 
         });
         connection.end();
+        buyPrompt();
     });
+}
+
+function buyPrompt() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "select ID of item that you want to purchase: ",
+            name: "ID"
+        },
+        {
+            type: "input",
+            message: "how many do you want: ",
+            name: "amount"
+        }
+    ]).then(response => {
+        console.log(response.ID);
+        console.log(response.amount);
+    })
 }
