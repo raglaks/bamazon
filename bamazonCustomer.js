@@ -23,13 +23,16 @@ function readItems() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
 
-        res.forEach(element => {
+        //console.log(res);
 
+        res.forEach(element => {
+            
+            console.log(element);
             console.log(`\n${element.item_id}: ${element.product_name}, $${element.price}.\n`);
 
         });
         connection.end();
-        buyPrompt();
+        //buyPrompt();
     });
 }
 
