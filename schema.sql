@@ -62,6 +62,8 @@ ALTER TABLE products MODIFY price DECIMAL(10,2) NOT NULL;
 SELECT * FROM products;
 
 --altering stock values bec theyr'e too high--
+USE bamazon;
+
 UPDATE products SET stock_quantity = 43 WHERE item_id = 1;
 
 UPDATE products SET stock_quantity = 15 WHERE item_id = 2;

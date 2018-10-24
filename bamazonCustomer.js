@@ -27,12 +27,12 @@ function readItems() {
 
         res.forEach(element => {
             
-            console.log(element);
+            //console.log(element);
             console.log(`\n${element.item_id}: ${element.product_name}, $${element.price}.\n`);
 
         });
-        connection.end();
-        //buyPrompt();
+        
+        buyPrompt();
     });
 }
 
@@ -49,7 +49,28 @@ function buyPrompt() {
             name: "amount"
         }
     ]).then(response => {
-        console.log(response.ID);
-        console.log(response.amount);
+        // console.log(response.ID);
+        // console.log(response.amount);
+
+        buy(response.ID, response.amount);
     })
+}
+
+function buy(id, amount) {
+
+    connection.query(`SELECT * FROM products WHERE item_id = ${id}`, function (err,res) {
+        if (err) throw err;
+
+        let amountDB = res[0].stock_quantity;
+
+        if (amountDB < amount) {
+            console.log(`not enough stock product available, sorry`);
+        } else {
+            console.log(`ok`);
+        }
+    })
+
+    //console.log(`this the id in the new func: ${id}`);
+    //console.log(`this the amount in the new func: ${amount}`);
+    connection.end();
 }
