@@ -61,3 +61,25 @@ ALTER TABLE products MODIFY price DECIMAL(10,2) NOT NULL;
 
 SELECT * FROM products;
 
+--altering stock values bec theyr'e too high--
+UPDATE products SET stock_quantity = 43 WHERE item_id = 1;
+
+UPDATE products SET stock_quantity = 15 WHERE item_id = 2;
+
+UPDATE products SET stock_quantity = 42 WHERE item_id = 3;
+
+UPDATE products SET stock_quantity = 14 WHERE item_id = 4;
+
+UPDATE products SET stock_quantity = 39 WHERE item_id = 5;
+
+UPDATE products SET stock_quantity = 5 WHERE item_id = 6;
+
+UPDATE products SET stock_quantity = 13 WHERE item_id = 7;
+
+UPDATE products SET stock_quantity = 28 WHERE item_id = 8;
+
+UPDATE products SET stock_quantity = 32 WHERE item_id = 9;
+
+UPDATE products SET stock_quantity = 2 WHERE item_id = 10;
+
+SELECT * FROM products;
