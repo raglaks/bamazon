@@ -59,15 +59,12 @@ function manageMenu() {
 
             addMore();
 
-        } else {
+        } else if (inp === "Add new product") {
 
-            console.log("coming soon");
+            addNew();
 
         }
-
     });
-
-    //connection.end();
 
 }
 
@@ -164,11 +161,65 @@ function updateStock(chosenID, chosenStock, stockOG) {
 
             console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
 
-            
+
         });
 
         connection.end();
-        
+
+    });
+
+}
+
+function addNew() {
+
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Product name: ",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "Department name: ",
+            name: "department"
+        },
+        {
+            type: "input",
+            message: "Price: ",
+            name: "price"
+        },
+        {
+            type: "input",
+            message: "Stock quantity: ",
+            name: "stock"
+        },
+    ]).then(response => {
+
+        let query = connection.query(
+            `INSERT INTO products SET ?`,
+            {
+                product_name: response.name,
+                department_name: response.department,
+                price: parseFloat(response.price),
+                stock_quantity: parseInt(response.stock)
+            },
+
+            function (err, res) {
+
+                if (err) throw err;
+
+                console.log(`\nProduct added.`);
+
+                viewAll();
+
+            }
+
+        );
+
+        //console.log(query.sql);
+
+        //connection.end();
+
     });
 
 }
