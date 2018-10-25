@@ -9,12 +9,14 @@ const connection = mysql.createConnection({
     user: "root",
 
     password: "password",
+    
     database: "bamazon"
 });
 
 connection.connect(function (err) {
 
     if (err) throw err;
+
     console.log("Connected as id " + connection.threadId + ".\n");
     readItems();
 

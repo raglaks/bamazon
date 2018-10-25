@@ -8,6 +8,47 @@
 // If a manager selects Add to Inventory, your app should display a prompt that will let the manager "add more" of any item currently in the store.
 // If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
 
+const mysql = require("mysql");
+const inquirer = require("inquirer");
 
+const connection = mysql.createConnection({
 
+    host: "localhost",
 
+    port: 3306,
+
+    user: "root",
+
+    password: "password",
+
+    database: "bamazon"
+});
+
+connection.connect(function (err) {
+
+    if (err) throw err;
+
+    console.log("Connected as id " + connection.threadId + ".\n");
+
+    manageMenu();
+
+})
+
+function manageMenu() {
+
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "Choose an option: ",
+            choices: ["View products", "View low inventory", "Add to inventory", "Add new product"],
+            name: "input"
+        }
+    ]).then(response => {
+
+        console.log(response.input);
+
+    });
+
+    connection.end();
+
+}
