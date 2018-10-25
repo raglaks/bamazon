@@ -45,7 +45,31 @@ function manageMenu() {
         }
     ]).then(response => {
 
-        console.log(response.input);
+        let inp = response.input;
+
+        if (inp === "View products") {
+            viewAll();
+        } else {
+            console.log("coming soon");
+        }
+
+    });
+
+    //connection.end();
+
+}
+
+function viewAll() {
+    
+    connection.query("SELECT * FROM products", function (err, res) {
+
+        if (err) throw err;
+
+        res.forEach(element => {
+
+            console.log(`\nID: ${element.item_id} | Product: ${element.product_name} | Price: $${element.price} | Stock: ${element.stock_quantity}\n`);
+
+        });
 
     });
 

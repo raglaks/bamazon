@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     user: "root",
 
     password: "password",
-    
+
     database: "bamazon"
 });
 
@@ -32,7 +32,7 @@ function readItems() {
 
         res.forEach(element => {
 
-            console.log(`\n${element.item_id}: ${element.product_name}, $${element.price}.\n`);
+            console.log(`\nID: ${element.item_id} | Product: ${element.product_name} | Price: $${element.price}\n`);
 
         });
 
@@ -110,7 +110,7 @@ function display(id) {
 
         if (err) throw err;
 
-        console.log(`\n${res[0].item_id}: ${res[0].product_name}, $${res[0].price}, ${res[0].stock_quantity} remaining.\n`);
+        console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
 
     });
 
