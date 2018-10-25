@@ -73,6 +73,8 @@ function buy(id, amount) {
 
         let price = res[0].price;
 
+        let netPrice = res[0].product_sales;
+
         if (amountDB < amount) {
 
             console.log(`\nNot enough stock product available, sorry.\n`);
@@ -81,18 +83,19 @@ function buy(id, amount) {
 
         } else {
 
-            itemBought(id, amount, amountDB, price);
+            itemBought(id, amount, amountDB, price, netPrice);
             
         }
 
     });
-
     
 }
 
-function itemBought(id, amount, amountDB, price) {
+function itemBought(id, amount, amountDB, price, netPrice) {
 
-    connection.query(`UPDATE products SET stock_quantity = ${amountDB - amount} WHERE item_id = ${id}`, function (err, res) {
+    let netSale = (amount*price) + netPrice;
+
+    connection.query(`UPDATE products SET stock_quantity = ${amountDB - amount}, product_sales = ${netSale} WHERE item_id = ${id}`, function (err, res) {
 
         if (err) throw err;
 
@@ -103,17 +106,3 @@ function itemBought(id, amount, amountDB, price) {
     connection.end();
 
 }
-
-// function display(id) {
-
-//     connection.query(`SELECT * FROM products where item_id=${id}`, function (err, res) {
-
-//         if (err) throw err;
-
-//         console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
-
-//     });
-
-//     connection.end();
-
-// }
