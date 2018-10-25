@@ -60,7 +60,7 @@ function buyPrompt() {
 
         buy(response.ID, response.amount);
 
-    })
+    });
 }
 
 function buy(id, amount) {
@@ -96,24 +96,24 @@ function itemBought(id, amount, amountDB, price) {
 
         if (err) throw err;
 
-        //display(id);
-
         console.log(`\nYour purchase cost: $${(amount * price).toFixed(2)}.\n`);
-
-    });
-
-}
-
-function display(id) {
-
-    connection.query(`SELECT * FROM products where item_id=${id}`, function (err, res) {
-
-        if (err) throw err;
-
-        console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
 
     });
 
     connection.end();
 
 }
+
+// function display(id) {
+
+//     connection.query(`SELECT * FROM products where item_id=${id}`, function (err, res) {
+
+//         if (err) throw err;
+
+//         console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
+
+//     });
+
+//     connection.end();
+
+// }

@@ -85,3 +85,6 @@ UPDATE products SET stock_quantity = 32 WHERE item_id = 9;
 UPDATE products SET stock_quantity = 2 WHERE item_id = 10;
 
 SELECT * FROM products;
+
+ALTER TABLE products
+  ADD product_sales DECIMAL(10,2) NOT NULL;
