@@ -96,7 +96,7 @@ function itemBought(id, amount, amountDB, price) {
 
         if (err) throw err;
 
-        display(id);
+        //display(id);
 
         console.log(`\nYour purchase cost: $${(amount * price).toFixed(2)}.\n`);
 

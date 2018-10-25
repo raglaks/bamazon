@@ -48,9 +48,17 @@ function manageMenu() {
         let inp = response.input;
 
         if (inp === "View products") {
+
             viewAll();
+
+        } else if (inp === "View low inventory") {
+
+            viewLow();
+
         } else {
+
             console.log("coming soon");
+
         }
 
     });
@@ -60,8 +68,28 @@ function manageMenu() {
 }
 
 function viewAll() {
-    
+
     connection.query("SELECT * FROM products", function (err, res) {
+
+        if (err) throw err;
+
+        res.forEach(element => {
+
+            console.log(`\nID: ${element.item_id} | Product: ${element.product_name} | Price: $${element.price} | Stock: ${element.stock_quantity}\n`);
+
+        });
+
+    });
+
+    connection.end();
+
+}
+
+function viewLow() {
+
+    connection.query(`SELECT * FROM products WHERE stock_quantity < 5`, function (err, res) {
+
+        console.log(`\nLOW STOCK: `);
 
         if (err) throw err;
 
