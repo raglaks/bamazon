@@ -22,7 +22,7 @@ connection.connect(function (err) {
 
     manageMenu();
 
-})
+});
 
 function manageMenu() {
 
@@ -182,7 +182,7 @@ function addNew() {
             message: "Stock quantity: ",
             name: "stock"
         },
-        
+
     ]).then(response => {
 
         let query = connection.query(
