@@ -55,6 +55,10 @@ function manageMenu() {
 
             viewLow();
 
+        } else if (inp === "Add to inventory") {
+
+            addMore();
+
         } else {
 
             console.log("coming soon");
@@ -102,5 +106,69 @@ function viewLow() {
     });
 
     connection.end();
+
+}
+
+function addMore() {
+
+    connection.query("SELECT * FROM products", function (err, res) {
+
+        if (err) throw err;
+
+        res.forEach(element => {
+
+            console.log(`\nID: ${element.item_id} | Product: ${element.product_name} | Price: $${element.price} | Stock: ${element.stock_quantity}\n`);
+
+        });
+
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Choose item ID to add more stock: ",
+                name: "ID"
+            },
+            {
+                type: "input",
+                message: "How much stock would you like to add: ",
+                name: "stock"
+            }
+        ]).then(response => {
+
+            let chosenID = parseInt(response.ID);
+            let chosenStock = parseInt(response.stock);
+
+            connection.query(`SELECT * FROM products WHERE item_id = ${chosenID}`, function (err, res) {
+
+                if (err) throw err;
+
+                let stockOG = res[0].stock_quantity;
+
+                updateStock(chosenID, chosenStock, stockOG);
+            });
+
+        });
+
+    });
+
+}
+
+function updateStock(chosenID, chosenStock, stockOG) {
+
+    connection.query(`UPDATE products SET stock_quantity = ${stockOG + chosenStock} WHERE item_id = ${chosenID}`, function (err, res) {
+
+        if (err) throw err;
+
+        connection.query(`SELECT * FROM products WHERE item_id = ${chosenID}`, function (err, res) {
+
+            console.log(`\nSTOCK UPDATED: `)
+
+            console.log(`\nID: ${res[0].item_id} | Product: ${res[0].product_name} | Price: $${res[0].price} | Stock: ${res[0].stock_quantity}\n`);
+
+            
+        });
+
+        connection.end();
+        
+    });
 
 }
