@@ -55,19 +55,36 @@ function supervisorMenu() {
 
 function viewSales() {
 
-    connection.query(`SELECT department_name FROM products`, function(err, res) {
+    connection.query(`SELECT * FROM products `, function(err, res) {
 
         if (err) throw err;
 
         res.forEach(element => {
 
+            let rando = Math.floor((Math.random() * 1000) + 1); 
+
             console.log(element.department_name);
+
+            connection.query(`INSERT INTO departments SET ?`, {
+                department_name: element.department_name,
+                over_head_costs: rando
+            },
+
+            function (err, res) {
+    
+                if (err) throw err;
+    
+                console.log(`\nDepartment and costs added.`);
+                
+            });
 
         });
 
+        connection.end();
+
     });
 
-    connection.end();
+    
 }
 
 function createDep() {
@@ -94,7 +111,6 @@ function createDep() {
             if (err) throw err;
 
             console.log(`\nDepartment and costs added.`);
-
             
         });
 
