@@ -185,7 +185,7 @@ function addNew() {
 
     ]).then(response => {
 
-        let query = connection.query(
+        connection.query(
             `INSERT INTO products SET ?`,
             {
                 product_name: response.name,
