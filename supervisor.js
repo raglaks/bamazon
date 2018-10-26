@@ -40,15 +40,67 @@ function supervisorMenu() {
 
         if (inp === "View product sales by department") {
 
-            console.log("here are the product sales");
+            viewSales();
 
         } else if (inp === "Create new department") {
 
-            console.log("creating a new dep.");
+            createDep();
 
         } 
 
     });
 
+    
+}
+
+function viewSales() {
+
+    connection.query(`SELECT department_name FROM products`, function(err, res) {
+
+        if (err) throw err;
+
+        res.forEach(element => {
+
+            console.log(element.department_name);
+
+        });
+
+    });
+
     connection.end();
+}
+
+function createDep() {
+
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Department name: ",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "Overhead costs: ",
+            name: "costs"
+        }
+    ]).then(response => {
+
+        connection.query(`INSERT INTO departments SET ?`, {
+            department_name: response.name,
+            over_head_costs: response.costs
+        },
+        function (err, res) {
+
+            if (err) throw err;
+
+            console.log(`\nDepartment and costs added.`);
+
+            
+        });
+
+        connection.end();
+
+    });
+
+    
 }
