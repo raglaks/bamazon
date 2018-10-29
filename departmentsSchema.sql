@@ -31,7 +31,7 @@ INNER JOIN
 products ON products.item_id = departments.department_id;
 
 --this query sums up totals for product sales and overhead BY DEPARTMENT and then joins the columns and calculates total profit
-SELECT departments.department_name, SUM(departments.over_head_costs), SUM(products.product_sales), (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit
+SELECT departments.department_name, SUM(departments.over_head_costs) AS net_costs, SUM(products.product_sales) AS net_sales, (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit
 FROM departments 
 INNER JOIN products 
 ON products.item_id = departments.department_id 
