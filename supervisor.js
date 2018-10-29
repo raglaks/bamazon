@@ -55,6 +55,8 @@ function supervisorMenu() {
 
 function viewSales() {
 
+    console.table([]);
+
     let profits = `SELECT departments.department_name, SUM(departments.over_head_costs), SUM(products.product_sales), (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit FROM departments INNER JOIN products ON products.item_id = departments.department_id GROUP BY department_name ORDER BY total_profit DESC;`;
 
     connection.query(`${profits}`, function (err, res) {
@@ -62,9 +64,11 @@ function viewSales() {
 
         res.forEach(element => {
 
-            console.log(element);
+            console.table.push(element);
 
         });
+
+        console.log(console.table);
     });
 
     connection.end();
