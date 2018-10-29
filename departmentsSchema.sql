@@ -28,5 +28,12 @@ GROUP BY products.item_id, departments.department_name, departments.over_head_co
 SELECT products.item_id, departments.department_name, departments.over_head_costs, products.product_sales, products.product_sales-departments.over_head_costs AS total_profit 
 FROM departments
 INNER JOIN
-products ON products.item_id = departments.department_id
-GROUP BY products.item_id, departments.department_name, departments.over_head_costs, products.product_sales, total_profit;
+products ON products.item_id = departments.department_id;
+
+--this query sums up totals for product sales and overhead BY DEPARTMENT and then joins the columns and calculates total profit
+SELECT departments.department_name, SUM(departments.over_head_costs), SUM(products.product_sales), (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit
+FROM departments 
+INNER JOIN products 
+ON products.item_id = departments.department_id 
+GROUP BY department_name 
+ORDER BY total_profit DESC;

@@ -46,26 +46,40 @@ function supervisorMenu() {
 
             createDep();
 
-        } 
+        }
 
     });
 
-    
+
 }
 
 function viewSales() {
-    
+
+    let profits = `SELECT departments.department_name, SUM(departments.over_head_costs), SUM(products.product_sales), (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit FROM departments INNER JOIN products ON products.item_id = departments.department_id GROUP BY department_name ORDER BY total_profit DESC;`;
+
+    connection.query(`${profits}`, function (err, res) {
+        if (err) throw err;
+
+        res.forEach(element => {
+
+            console.log(element);
+
+        });
+    });
+
+    connection.end();
+
 }
 
 function populateDeps() {
 
-    connection.query(`SELECT * FROM products `, function(err, res) {
+    connection.query(`SELECT * FROM products `, function (err, res) {
 
         if (err) throw err;
 
         res.forEach(element => {
 
-            let rando = Math.floor((Math.random() * 1000) + 1); 
+            let rando = Math.floor((Math.random() * 1000) + 1);
 
             console.log(element.department_name);
 
@@ -74,13 +88,13 @@ function populateDeps() {
                 over_head_costs: rando
             },
 
-            function (err, res) {
-    
-                if (err) throw err;
-    
-                console.log(`\nDepartment and costs added.`);
-                
-            });
+                function (err, res) {
+
+                    if (err) throw err;
+
+                    console.log(`\nDepartment and costs added.`);
+
+                });
 
         });
 
@@ -88,7 +102,7 @@ function populateDeps() {
 
     });
 
-    
+
 }
 
 function createDep() {
@@ -112,17 +126,17 @@ function createDep() {
             department_name: response.name,
             over_head_costs: response.costs
         },
-        function (err, res) {
+            function (err, res) {
 
-            if (err) throw err;
+                if (err) throw err;
 
-            console.log(`\nDepartment and costs added.`);
-            
-        });
+                console.log(`\nDepartment and costs added.`);
+
+            });
 
         connection.end();
 
     });
 
-    
+
 }
