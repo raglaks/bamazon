@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const table = require("console.table");
+const Table = require("easy-table");
 
 const connection = mysql.createConnection({
 
@@ -55,17 +55,27 @@ function supervisorMenu() {
 
 function viewSales() {
 
-    let profits = `SELECT departments.department_name, SUM(departments.over_head_costs), SUM(products.product_sales), (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit FROM departments INNER JOIN products ON products.item_id = departments.department_id GROUP BY department_name ORDER BY total_profit DESC;`;
+    let profits = `SELECT departments.department_name, SUM(departments.over_head_costs) AS net_costs, SUM(products.product_sales) AS net_sales, (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit FROM departments INNER JOIN products ON products.item_id = departments.department_id GROUP BY department_name ORDER BY total_profit DESC;`;
+
+    let dataR = null;
 
     connection.query(`${profits}`, function (err, res) {
         if (err) throw err;
 
-        res.forEach(element => {
+        dataR = res;
 
-            console.table(element);
+        let t = new Table;
 
+        dataR.forEach(function (product) {
+            t.cell("Department name", product.department_name);
+            t.cell("Net overhead costs", product.net_costs);
+            t.cell("Net sales", product.net_sales);
+            t.cell("Total profit", product.total_profit, Table.number(2));
+            t.newRow()
         });
-        
+    
+        console.log(t.toString());
+
     });
 
     connection.end();
