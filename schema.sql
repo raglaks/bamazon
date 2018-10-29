@@ -59,8 +59,6 @@ SELECT * FROM products;
 --altered price column so that decimal values only show two digits after point--
 ALTER TABLE products MODIFY price DECIMAL(10,2) NOT NULL;
 
-SELECT * FROM products;
-
 --altering stock values bec theyr'e too high--
 USE bamazon;
 
@@ -86,7 +84,12 @@ UPDATE products SET stock_quantity = 2 WHERE item_id = 10;
 
 SELECT * FROM products;
 
+--altering parameters to clean up table
 ALTER TABLE products
   ADD product_sales DECIMAL(10,2) NOT NULL;
 
-ALTER TABLE 
+--query to get all exisitng departments with sum total of product sales
+SELECT department_name, SUM(product_sales) 
+FROM products
+GROUP BY department_name
+ORDER BY SUM(product_sales) DESC;

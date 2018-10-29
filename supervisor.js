@@ -54,6 +54,10 @@ function supervisorMenu() {
 }
 
 function viewSales() {
+    
+}
+
+function populateDeps() {
 
     connection.query(`SELECT * FROM products `, function(err, res) {
 
@@ -88,6 +92,8 @@ function viewSales() {
 }
 
 function createDep() {
+
+    //let rando = Math.floor((Math.random() * 1000) + 1); 
 
     inquirer.prompt([
         {
