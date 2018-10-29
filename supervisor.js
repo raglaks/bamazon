@@ -115,9 +115,7 @@ function populateDeps() {
 
 }
 
-function createDep() {
-
-    //let rando = Math.floor((Math.random() * 1000) + 1); 
+function createDep() { 
 
     inquirer.prompt([
         {
