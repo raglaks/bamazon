@@ -57,12 +57,11 @@ function viewSales() {
 
     let profits = `SELECT departments.department_name, SUM(departments.over_head_costs) AS net_costs, SUM(products.product_sales) AS net_sales, (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit FROM departments INNER JOIN products ON products.item_id = departments.department_id GROUP BY department_name ORDER BY total_profit DESC;`;
 
-    let dataR = null;
-
     connection.query(`${profits}`, function (err, res) {
+
         if (err) throw err;
 
-        dataR = res;
+        let dataR = res;
 
         let t = new Table;
 
