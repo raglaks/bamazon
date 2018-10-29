@@ -73,7 +73,7 @@ function viewSales() {
             t.newRow()
         });
     
-        console.log(t.toString());
+        console.log(`\n${t.toString()}`);
 
     });
 
