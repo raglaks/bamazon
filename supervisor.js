@@ -81,6 +81,7 @@ function viewSales() {
 
 }
 
+//this function populated the departments database initially
 function populateDeps() {
 
     connection.query(`SELECT * FROM products `, function (err, res) {
