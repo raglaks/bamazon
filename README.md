@@ -6,4 +6,6 @@ This is a command line node app and is basically an Amazon clone. The back-end p
 
 Before you start, run `npm install` to get the required modules for this app. Then, type `node bamazonCustomer.js` and you will automatically be shown a list of available products:
 
+![Customer_1](images/c1.png)
+
 
