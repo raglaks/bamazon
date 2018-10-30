@@ -1,6 +1,8 @@
 # Bamazon
 
-This command line Node app is basically an Amazon clone. The back-end part consists of a database, built with MySQL, to store information about different products available for sale. The "front-end" part is divided into three sections: customer, manager and supervisor. The user may interact with any one of these sections and by doing so, the database will be updated dynamically. Here is a small walk-through of each different section:
+This command line Node app is basically an Amazon clone. The back-end part consists of a database, built with MySQL, to store information about different products available for sale. The "front-end" part is divided into three sections: customer, manager and supervisor. The user may interact with any one of these sections and by doing so, the database will be updated dynamically. 
+
+Here is a small walk-through of each different section:
 
 
 ## Bamazon for customers
@@ -59,10 +61,15 @@ The other option in the menu, "Create new department" will simply allow you to c
 This was a very challenging build because of the whole data-storage and data-retrieval aspect. Although MySQL is fairly straighforward, I was completely lost when having to do more complex queries such as the profits table for supervisors. After a few days of extensive YouTube tutorials on SQL Joins, I finally managed to crack the problem and came up with this query:
 
 `SELECT departments.department_name, SUM(departments.over_head_costs) AS net_costs, SUM(products.product_sales) AS net_sales, (SUM(products.product_sales) - SUM(departments.over_head_costs)) AS total_profit
+
 FROM departments 
+
 INNER JOIN products 
+
 ON products.item_id = departments.department_id 
+
 GROUP BY department_name 
+
 ORDER BY total_profit DESC;`
 
 But this solution only came to me by breaking down the task at hand and then building up from there. 
@@ -70,13 +77,20 @@ But this solution only came to me by breaking down the task at hand and then bui
 Here are two queries that proved essential for the final one:
 
 `SELECT department_name, SUM(over_head_costs)
+
 FROM departments
+
 GROUP BY department_name
+
 ORDER BY SUM(over_head_costs) DESC;`
 
+
 `SELECT department_name, SUM(product_sales) 
+
 FROM products
+
 GROUP BY department_name
+
 ORDER BY SUM(product_sales) DESC;`
 
 These two building blocks helped me visualize what each SQL command was doing to the data, thus allowing me to progress.
